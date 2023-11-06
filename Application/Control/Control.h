@@ -16,8 +16,20 @@
 #define CONTROL_BAUD_RATE 			9600
 
 
+
+//#define CONTROL_SET_PASSWORD "STPWD"
+//#define CONTROL_CHECK_PASSWORD "CHCKPWD"
+
+typedef enum {CONTROL_SET_PASSWORD='A',CONTROL_CHECK_PASSWORD} ControlCommand;
+
+typedef enum {CONTROL_CORRECT_PASSWORD='a',CONTROL_WRONG_PASSWORD} PasswordStatus;
+
 void CONTROL_init();
 
+void CONTROL_sendCommand(const ControlCommand cmd);
+
 void CONTROL_sendPassword(const uint8 const* password);
+
+PasswordStatus CONTROL_receivePasswordStatus();
 
 #endif /* APPLICATION_CONTROL_CONTROL_H_ */

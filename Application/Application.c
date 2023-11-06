@@ -22,8 +22,6 @@ void Application_Setup() {
 	LCD_displayString("AN Smart Door");
 	_delay_ms(500);
 
-
-
 	while (1) {
 		LCD_clearScreen();
 		LCD_displayString("plz enter the password");
@@ -59,13 +57,76 @@ void Application_Setup() {
 		LCD_displayString("Password verifiction error");
 	}
 	LCD_clearScreen();
+	CONTROL_sendCommand(CONTROL_SET_PASSWORD);
 	CONTROL_sendPassword(entered_password);
 
 }
 
 void Application_Loop() {
-	x = KEYPAD_getPressedKey();
-	if (x != 255)
-		LCD_displayCharacter(x);
-	_delay_ms(150);
+	static uint8 i;
+	LCD_displayString("+: Open the Door");
+	LCD_displayString("-: Change Password");
+
+	do {
+		x = KEYPAD_getPressedKey();
+
+	} while (x != '+' && x != '-');
+	LCD_clearScreen();
+
+	if (x == '+') {
+		//getting the password
+		do {
+			LCD_displayString("plz enter the password");
+			for (i = 0; i < 5; ++i) {
+				do {
+					x = KEYPAD_getPressedKey();
+				} while (x == 255);
+				LCD_displayStringRowColumn(1, i, "*");
+				_delay_ms(150);
+				entered_password[i] = x;
+			}
+			CONTROL_sendCommand(CONTROL_CHECK_PASSWORD);
+			CONTROL_sendPassword(entered_password);
+			LCD_clearScreen();
+		} while (CONTROL_receivePasswordStatus() != CONTROL_CORRECT_PASSWORD);
+	} else if (x == '-') {
+		while (1) {
+				LCD_clearScreen();
+				LCD_displayString("plz enter the password");
+				for (i = 0; i < 5; ++i) {
+					do {
+						x = KEYPAD_getPressedKey();
+					} while (x == 255);
+					LCD_displayStringRowColumn(1, i, "*");
+					_delay_ms(150);
+					password[i] = x;
+				}
+				LCD_clearScreen();
+				LCD_displayString("plz re-enter the password");
+				for (i = 0; i < 5; ++i) {
+					do {
+						x = KEYPAD_getPressedKey();
+					} while (x == 255);
+					LCD_displayStringRowColumn(1, i, "*");
+					_delay_ms(150);
+					entered_password[i] = x;
+				}
+				uint8 eqlFlg = 1;
+				for (i = 0; i < 5; ++i) {
+					if (password[i] != entered_password[i]) {
+						eqlFlg = 0;
+						break;
+					}
+				}
+				if (eqlFlg) {
+					break;
+				}
+				LCD_clearScreen();
+				LCD_displayString("Password verifiction error");
+			}
+			LCD_clearScreen();
+			CONTROL_sendCommand(CONTROL_SET_PASSWORD);
+			CONTROL_sendPassword(entered_password);
+	}
+
 }

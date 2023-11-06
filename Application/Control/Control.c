@@ -7,6 +7,8 @@
 
 #include "Control.h"
 
+#include <string.h>
+
 void CONTROL_init() {
 	UART_ConfigType uart_config;
 	uart_config.baud_rate = CONTROL_BAUD_RATE;
@@ -15,9 +17,14 @@ void CONTROL_init() {
 	uart_config.stop_bit = CONTROL_BIT_STOP_BIT;
 	UART_init(&uart_config);
 }
+void CONTROL_sendCommand(const ControlCommand cmd){
+	UART_sendByte(cmd);
+}
+
+
 void CONTROL_sendPassword(const uint8 const *password) {
 	static uint8 sentPassword[7] = { 0 };
-	static uint8 i;
+	register uint8 i;
 	for (i = 0; i < 5; ++i) {
 		sentPassword[i] = password[i];
 	}
@@ -26,3 +33,8 @@ void CONTROL_sendPassword(const uint8 const *password) {
 
 	UART_sendString(sentPassword);
 }
+
+PasswordStatus CONTROL_receivePasswordStatus(){
+	return UART_recieveByte();
+}
+
