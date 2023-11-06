@@ -42,10 +42,10 @@ void UART_init(const UART_ConfigType const * config);
 
 void UART_sendByte(uint8 data);
 
-void UART_sendString (uint8 * str);
+void UART_sendString(const uint8 *Str);
 
-uint8 UART_reciveByte();
+uint8 UART_recieveByte(void);
 
-void UART_reciveString(uint8* str);
+void UART_receiveString(uint8 *Str);
 
 #endif /* MCAL_UART_UART_H_ */

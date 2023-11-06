@@ -1,5 +1,8 @@
 Application/Application.o Application/Application.o:  \
  ../Application/Application.c ../Application/Application.h \
+  ../Application/Control/Control.h \
+  ../Application/Control/../../MCAL/UART/UART.h \
+  ../Application/Control/../../MCAL/UART/../../std_types.h \
   ../Application/../HAL/LCD/LCD.h \
   ../Application/../HAL/LCD/../../std_types.h \
   ../Application/../HAL/LCD/../../MCAL/GPIO/gpio.h \
@@ -9,6 +12,12 @@ Application/Application.o Application/Application.o:  \
   ../Application/../MCAL/GPIO/gpio.h
 
 ../Application/Application.h:
+
+../Application/Control/Control.h:
+
+../Application/Control/../../MCAL/UART/UART.h:
+
+../Application/Control/../../MCAL/UART/../../std_types.h:
 
 ../Application/../HAL/LCD/LCD.h:
 

@@ -19,6 +19,7 @@ RM := rm -rf
 -include HAL/Keypad/subdir.mk
 -include HAL/External_EEPROM/subdir.mk
 -include HAL/DC_Motor/subdir.mk
+-include Application/Control/subdir.mk
 -include Application/subdir.mk
 -include subdir.mk
 -include objects.mk

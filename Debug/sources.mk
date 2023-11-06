@@ -20,6 +20,7 @@ C_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 Application \
+Application/Control \
 HAL/DC_Motor \
 HAL/External_EEPROM \
 HAL/Keypad \

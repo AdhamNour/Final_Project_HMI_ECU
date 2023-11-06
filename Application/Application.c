@@ -3,6 +3,8 @@
 
 #include <util/delay.h>
 
+#include "Control/Control.h"
+
 #include "../HAL/LCD/LCD.h"
 #include "../HAL/Keypad/Keypad.h"
 
@@ -10,14 +12,17 @@
 
 static uint8 x;
 
-static uint8 password[5] = { 0 }, entered_password[5] = { 0xFF };
+static uint8 password[6] = { 0 }, entered_password[6] = { 0xFF };
 
 void Application_Setup() {
 	static uint8 i;
 	LCD_init();
 	KEYPAD_init();
+	CONTROL_init();
 	LCD_displayString("AN Smart Door");
 	_delay_ms(500);
+
+
 
 	while (1) {
 		LCD_clearScreen();
@@ -54,6 +59,7 @@ void Application_Setup() {
 		LCD_displayString("Password verifiction error");
 	}
 	LCD_clearScreen();
+	CONTROL_sendPassword(entered_password);
 
 }
 
