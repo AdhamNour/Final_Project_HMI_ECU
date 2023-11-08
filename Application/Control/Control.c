@@ -37,4 +37,7 @@ void CONTROL_sendPassword(const uint8 const *password) {
 PasswordStatus CONTROL_receivePasswordStatus(){
 	return UART_recieveByte();
 }
+DoorStatus CONTROL_receiveDoorStatus(){
+	return UART_recieveByte();
+}
 
